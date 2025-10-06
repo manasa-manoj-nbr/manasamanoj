@@ -18,18 +18,18 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 220 20% 15%;
 
-    /* Primary: Electric Blue (Retro Arcade) */
-    --primary: 217 91% 60%;
+    /* Primary: Vibrant Cyan/Teal (Tech/Futuristic) */
+    --primary: 186 100% 45%;
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 217 91% 75%;
+    --primary-glow: 186 100% 65%;
 
-    /* Secondary: Hot Orange (Arcade Energy) */
-    --secondary: 14 100% 57%;
+    /* Secondary: Purple/Magenta (AI/Creativity) */
+    --secondary: 280 70% 55%;
     --secondary-foreground: 0 0% 100%;
-    --secondary-glow: 14 100% 70%;
+    --secondary-glow: 280 70% 75%;
 
-    /* Accent: Bright Yellow (Coin/Star) */
-    --accent: 48 100% 50%;
+    /* Accent: Yellow/Orange (Energy/Comics) */
+    --accent: 38 100% 55%;
     --accent-foreground: 220 20% 15%;
     
     --muted: 210 40% 96%;
@@ -83,18 +83,18 @@ All colors MUST be HSL.
     --popover: 230 30% 12%;
     --popover-foreground: 210 40% 98%;
 
-    /* Primary: Neon Blue (Arcade Glow) */
-    --primary: 217 91% 65%;
+    /* Primary: Neon Cyan (Glowing Tech) */
+    --primary: 186 100% 55%;
     --primary-foreground: 230 35% 8%;
-    --primary-glow: 217 91% 80%;
+    --primary-glow: 186 100% 70%;
 
-    /* Secondary: Neon Orange (Arcade Fire) */
-    --secondary: 14 100% 62%;
+    /* Secondary: Neon Purple (AI Glow) */
+    --secondary: 280 80% 60%;
     --secondary-foreground: 230 35% 8%;
-    --secondary-glow: 14 100% 75%;
+    --secondary-glow: 280 80% 75%;
 
-    /* Accent: Neon Yellow (Power Up) */
-    --accent: 48 100% 55%;
+    /* Accent: Neon Yellow (Energy) */
+    --accent: 45 100% 60%;
     --accent-foreground: 230 35% 8%;
     
     --muted: 230 25% 20%;
