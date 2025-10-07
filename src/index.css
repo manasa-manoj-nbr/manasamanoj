@@ -31,7 +31,7 @@ All colors MUST be HSL.
     /* Accent: Yellow/Orange (Energy/Comics) */
     --accent: 38 100% 55%;
     --accent-foreground: 220 20% 15%;
-    
+
     --muted: 210 40% 96%;
     --muted-foreground: 220 15% 50%;
 
@@ -43,15 +43,27 @@ All colors MUST be HSL.
     --ring: 186 100% 45%;
 
     --radius: 0.75rem;
-    
+
     /* Custom Design Tokens */
     --pixel-shadow: 4px 4px 0px hsl(220 20% 15% / 0.2);
     --comic-shadow: 6px 6px 0px hsl(220 20% 15% / 0.15);
     --glow-primary: 0 0 20px hsl(var(--primary-glow) / 0.5);
     --glow-secondary: 0 0 20px hsl(var(--secondary-glow) / 0.5);
-    --gradient-hero: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--secondary)) 100%);
-    --gradient-card: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(210 40% 98%) 100%);
-    --dotted-pattern: radial-gradient(circle, hsl(220 20% 85%) 1px, transparent 1px);
+    --gradient-hero: linear-gradient(
+      135deg,
+      hsl(var(--primary)) 0%,
+      hsl(var(--secondary)) 100%
+    );
+    --gradient-card: linear-gradient(
+      180deg,
+      hsl(0 0% 100%) 0%,
+      hsl(210 40% 98%) 100%
+    );
+    --dotted-pattern: radial-gradient(
+      circle,
+      hsl(220 20% 85%) 1px,
+      transparent 1px
+    );
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --bounce-timing: cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
@@ -96,7 +108,7 @@ All colors MUST be HSL.
     /* Accent: Neon Yellow (Energy) */
     --accent: 45 100% 60%;
     --accent-foreground: 230 35% 8%;
-    
+
     --muted: 230 25% 20%;
     --muted-foreground: 215 20% 65%;
 
@@ -106,15 +118,27 @@ All colors MUST be HSL.
     --border: 230 25% 20%;
     --input: 230 25% 18%;
     --ring: 186 100% 55%;
-    
+
     /* Dark Mode Custom Tokens */
     --pixel-shadow: 4px 4px 0px hsl(0 0% 0% / 0.5);
     --comic-shadow: 6px 6px 0px hsl(0 0% 0% / 0.4);
     --glow-primary: 0 0 30px hsl(var(--primary-glow) / 0.6);
     --glow-secondary: 0 0 30px hsl(var(--secondary-glow) / 0.6);
-    --gradient-hero: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--secondary)) 100%);
-    --gradient-card: linear-gradient(180deg, hsl(230 30% 12%) 0%, hsl(230 30% 15%) 100%);
-    --dotted-pattern: radial-gradient(circle, hsl(230 25% 25%) 1px, transparent 1px);
+    --gradient-hero: linear-gradient(
+      135deg,
+      hsl(var(--primary)) 0%,
+      hsl(var(--secondary)) 100%
+    );
+    --gradient-card: linear-gradient(
+      180deg,
+      hsl(230 30% 12%) 0%,
+      hsl(230 30% 15%) 100%
+    );
+    --dotted-pattern: radial-gradient(
+      circle,
+      hsl(230 25% 25%) 1px,
+      transparent 1px
+    );
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -135,11 +159,16 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
     background-image: var(--dotted-pattern);
     background-size: 20px 20px;
-    font-family: 'VT323', monospace;
+    font-family: "VT323", monospace;
   }
-  
-  h1, h2, h3, h4, h5, h6 {
-    font-family: 'Press Start 2P', cursive;
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Press Start 2P", cursive;
   }
 }
 
@@ -147,39 +176,39 @@ All colors MUST be HSL.
   .pixel-shadow {
     box-shadow: var(--pixel-shadow);
   }
-  
+
   .comic-shadow {
     box-shadow: var(--comic-shadow);
   }
-  
+
   .glow-primary {
     box-shadow: var(--glow-primary);
   }
-  
+
   .glow-secondary {
     box-shadow: var(--glow-secondary);
   }
-  
+
   .gradient-hero {
     background: var(--gradient-hero);
   }
-  
+
   .gradient-card {
     background: var(--gradient-card);
   }
-  
+
   .animate-bounce-in {
     animation: bounce-in 0.6s var(--bounce-timing);
   }
-  
+
   .animate-slide-up {
     animation: slide-up 0.6s ease-out;
   }
-  
+
   .animate-float {
     animation: float 3s ease-in-out infinite;
   }
-  
+
   @keyframes bounce-in {
     0% {
       transform: scale(0.8);
@@ -193,7 +222,7 @@ All colors MUST be HSL.
       opacity: 1;
     }
   }
-  
+
   @keyframes slide-up {
     from {
       transform: translateY(30px);
@@ -204,13 +233,24 @@ All colors MUST be HSL.
       opacity: 1;
     }
   }
-  
+
   @keyframes float {
-    0%, 100% {
+    0%,
+    100% {
       transform: translateY(0px);
     }
     50% {
       transform: translateY(-10px);
     }
+  }
+
+  /* Hide scrollbar utility */
+  .scrollbar-hide {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
   }
 }

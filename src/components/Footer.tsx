@@ -65,7 +65,7 @@ export function Footer() {
             Made with <Heart className="w-5 h-5 text-destructive animate-pulse" /> and lots of ☕
           </p>
           <p className="font-pixel text-sm text-foreground">
-            © {new Date().getFullYear()} Your Name. All rights reserved.
+            © {new Date().getFullYear()} Manasa Manoj. All rights reserved.
           </p>
           <p className="font-retro text-sm text-muted-foreground mt-2">
             Powered by React + TypeScript + Vite ⚡

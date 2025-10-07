@@ -1,7 +1,13 @@
 import { motion, useTransform, useScroll } from "framer-motion";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Briefcase, Trophy, GraduationCap, MapPin, Calendar } from "lucide-react";
+import {
+  Briefcase,
+  Trophy,
+  GraduationCap,
+  MapPin,
+  Calendar,
+} from "lucide-react";
 import { useRef } from "react";
 
 interface ExperienceItem {
@@ -11,362 +17,513 @@ interface ExperienceItem {
   organization: string;
   location?: string;
   timeline: string;
-  description: string;
+  description?: string;
   achievements?: string[];
   techStack?: string[];
   gpa?: string;
   award?: string;
   image?: string;
-  certificate?: string;
 }
 
 const experiences: ExperienceItem[] = [
   {
-    id: "work-1",
-    category: "work",
-    title: "Research Intern",
-    organization: "Tech Research Lab",
-    location: "Remote",
-    timeline: "Jun 2024 - Present",
-    description: "Conducting cutting-edge research in machine learning and computer vision, developing novel algorithms for image recognition.",
-    achievements: [
-      "Published 2 research papers",
-      "Improved model accuracy by 23%",
-      "Mentored 3 junior interns"
-    ],
-    techStack: ["Python", "PyTorch", "OpenCV", "TensorFlow"],
-    image: "/placeholder.svg"
-  },
-  {
     id: "work-2",
     category: "work",
     title: "AI Developer",
-    organization: "Innovative AI Startup",
-    location: "San Francisco, CA",
-    timeline: "Jan 2024 - May 2024",
-    description: "Built and deployed AI-powered applications serving 10K+ users, focusing on natural language processing and chatbot development.",
-    achievements: [
-      "Deployed 3 production AI models",
-      "Reduced inference time by 40%",
-      "Led team of 4 developers"
+    organization: "EdQueries LLP",
+    location: "Bangalore, India",
+    timeline: "May 2025 - Present",
+    description:
+      "Built and integrated an AI chatbot for EdQueries LMS, achieving a 98% success rate across 1,000+ queries. Optimized workflows to reduce response time by 65% and deployed contextual search, improving answer accuracy by 40%. Also worked on marketing automation, streamlining campaigns and enhancing lead engagement.",
+    techStack: [
+      "React JS",
+      "n8n",
+      "openai",
+      "Upstash Redis",
+      "brevo",
+      "aisensy",
     ],
-    techStack: ["Python", "LangChain", "FastAPI", "Docker", "AWS"],
-    image: "/placeholder.svg"
+  },
+  {
+    id: "work-1",
+    category: "work",
+    title: "Research Intern",
+    organization: "NIT Calicut",
+    location: "Calicut, India",
+    timeline: "May 2025 - July 2025",
+    description:
+      "Conducted research and prototyped a GenAI-based personalized learning platform, exploring adaptive educational delivery and competency frameworks. Investigated AI-driven workflows and evaluated system performance, achieving 94% response accuracy across test cases. Analyzed architectural bottlenecks and proposed optimizations, reducing response latency by 50% and enhancing platform efficiency.",
+    techStack: ["React JS", "n8n", "gpt-4", "Moodle", "SCORM"],
   },
   {
     id: "hack-1",
     category: "hackathon",
-    title: "HackPolice Winner",
-    organization: "National Hackathon",
-    timeline: "Mar 2024",
-    description: "Won 1st place among 200+ teams by building an AI-powered crime prediction system using machine learning and geospatial data.",
-    award: "🏆 1st Place Winner - $5,000 Prize",
-    achievements: [
-      "Beat 200+ competing teams",
-      "Built full-stack app in 24 hours",
-      "Secured funding for further development"
-    ],
-    techStack: ["React", "Python", "TensorFlow", "Google Maps API"],
-    certificate: "/placeholder.svg",
-    image: "/placeholder.svg"
+    title: "HacKP'25  Winner",
+    organization: "Kerala Police Cyberdome",
+    timeline: "Oct 2025",
+    location: "Taj Vivanta Kochi, India",
+    description:
+      "Hac’KP 2025 is Kerala Police Cyberdome's flagship hackathon, organized in collaboration with Childlight - Global Child Safety Institute, focused on developing solutions to combat online harm and enhance child safety.",
+    award: "🏆 Most Collaborative Person Award",
+    image: "/award.JPG",
   },
   {
     id: "edu-1",
     category: "education",
-    title: "Bachelor of Science in Computer Science",
-    organization: "Tech University",
-    location: "Boston, MA",
-    timeline: "2021 - 2025",
-    description: "Focused on Artificial Intelligence and Software Engineering with hands-on projects and research opportunities.",
-    gpa: "3.9/4.0",
-    achievements: [
-      "Dean's List all semesters",
-      "President of CS Club",
-      "Research Assistant in AI Lab"
-    ],
-    certificate: "/placeholder.svg",
-    image: "/placeholder.svg"
+    title: "BTech in Computer Sciene Engineering with Cyber Security",
+    organization: "Indian Intitute of Information Technology (IIIT Kottayam)",
+    location: "Kottayam, India",
+    timeline: "2023 - 2027",
+    gpa: "9.08",
   },
-  {
-    id: "edu-2",
-    category: "education",
-    title: "High School Diploma",
-    organization: "Central High School",
-    location: "New York, NY",
-    timeline: "2017 - 2021",
-    description: "Graduated with honors, specializing in STEM subjects and winning multiple science competitions.",
-    gpa: "4.0/4.0",
-    achievements: [
-      "Valedictorian",
-      "National Merit Scholar",
-      "Science Olympiad Gold Medal"
-    ],
-    certificate: "/placeholder.svg"
-  }
 ];
 
 const categoryIcons = {
   work: Briefcase,
   hackathon: Trophy,
-  education: GraduationCap
+  education: GraduationCap,
 };
 
 const categoryColors = {
   work: "bg-primary/10 text-primary border-primary",
   hackathon: "bg-secondary/10 text-secondary border-secondary",
-  education: "bg-accent/10 text-accent border-accent"
+  education: "bg-accent/10 text-accent border-accent",
 };
 
 export const Experience = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"]
-  });
-
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-50%"]);
+  // Group experiences by category
+  const workExperiences = experiences.filter((e) => e.category === "work");
+  const hackathons = experiences.filter((e) => e.category === "hackathon");
+  const education = experiences.filter((e) => e.category === "education");
 
   return (
-    <section id="experience" className="py-20 overflow-hidden relative" ref={containerRef}>
-      <div className="container mx-auto px-4 mb-12">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center"
-        >
-          <h2 className="text-4xl md:text-6xl font-bold mb-4 pixel-shadow">
-            Experience
-          </h2>
-          <p className="text-lg text-muted-foreground mb-8">
-            Scroll to explore my journey →
-          </p>
-        </motion.div>
-      </div>
+    <div
+      id="experience"
+      className="min-w-screen h-screen flex flex-col justify-center bg-muted/30 px-8 md:px-16 mr-4"
+    >
+      {/* Header */}
 
-      <motion.div
-        style={{ x }}
-        className="flex gap-6 px-4"
-      >
-        {experiences.map((exp, index) => {
-          const Icon = categoryIcons[exp.category];
-          
-          return (
-            <motion.div
-              key={exp.id}
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              whileHover={{ 
-                scale: 1.05,
-                rotateY: 5,
-                z: 50,
-                transition: { type: "spring", stiffness: 300 }
-              }}
-              transition={{ 
-                duration: 0.3,
-                delay: index * 0.1
-              }}
-              className="flex-shrink-0 w-[400px] md:w-[500px] group relative"
-            >
-              {/* Comic burst effect */}
-              <motion.div
-                initial={{ scale: 0, rotate: 0 }}
-                whileHover={{ scale: 1, rotate: 180 }}
-                transition={{ duration: 0.3 }}
-                className="absolute -top-6 -right-6 text-6xl z-10 pointer-events-none"
-              >
-                ⚡
-              </motion.div>
-
-              <Card className="h-full bg-card/50 backdrop-blur-sm border-2 hover:border-primary transition-all duration-300 overflow-hidden relative group-hover:shadow-2xl group-hover:shadow-primary/20">
-                {/* Animated gradient overlay */}
+      <h2 className="text-4xl md:text-6xl font-pixel mb-4 pixel-shadow text-foreground">
+        Experience
+      </h2>
+      <div className="w-24 h-1 bg-accent mb-4 pixel-shadow" />
+      <p className="text-lg font-retro text-muted-foreground">
+        My journey through work, hackathons, and education 🚀
+      </p>
+      {/* Horizontal scrolling cards container */}
+      <div className="overflow-x-auto overflow-y-hidden scrollbar-hide pb-8">
+        <div className="flex gap-8 px-4 mt-8">
+          {/* Work Experience Section */}
+          {workExperiences.length > 0 && (
+            <>
+              <div className="flex-shrink-0 flex items-center justify-center w-[200px] md:w-[250px]">
                 <motion.div
-                  className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                />
-
-                {/* Image/Certificate section */}
-                {(exp.image || exp.certificate) && (
-                  <div className="relative h-48 overflow-hidden">
-                    <motion.img
-                      src={exp.image || exp.certificate}
-                      alt={exp.title}
-                      className="w-full h-full object-cover"
-                      whileHover={{ scale: 1.1 }}
-                      transition={{ duration: 0.3 }}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-card to-transparent" />
-                    
-                    {/* Floating particles */}
-                    {[...Array(3)].map((_, i) => (
-                      <motion.div
-                        key={i}
-                        className="absolute w-2 h-2 bg-primary rounded-full opacity-0 group-hover:opacity-60"
-                        animate={{
-                          y: -100,
-                          x: (i - 1) * 30
-                        }}
-                        transition={{
-                          duration: 2,
-                          repeat: Infinity,
-                          delay: i * 0.3,
-                          ease: "easeOut"
-                        }}
-                        style={{
-                          left: `${20 + i * 30}%`,
-                          bottom: 0
-                        }}
-                      />
-                    ))}
-                  </div>
-                )}
-
-                <div className="p-6 relative z-10">
-                  {/* Category Badge */}
-                  <motion.div
-                    whileHover={{ scale: 1.1, rotate: 5 }}
-                    className="inline-block mb-4"
-                  >
-                    <Badge className={`${categoryColors[exp.category]} border-2 pixel-shadow`}>
-                      <Icon className="w-4 h-4 mr-1" />
-                      {exp.category.toUpperCase()}
-                    </Badge>
-                  </motion.div>
-
-                  {/* Title and Organization */}
-                  <h3 className="text-2xl font-bold mb-2 group-hover:text-primary transition-colors">
-                    {exp.title}
+                  className="text-center"
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <Briefcase className="w-12 h-12 md:w-16 md:h-16 text-primary mx-auto mb-3 pixel-shadow" />
+                  <h3 className="font-pixel text-lg md:text-2xl text-foreground">
+                    Work
+                    <br />
+                    Experience
                   </h3>
-                  <p className="text-lg font-semibold text-muted-foreground mb-2">
-                    {exp.organization}
-                  </p>
+                </motion.div>
+              </div>
+              {workExperiences.map((exp, index) => {
+                const Icon = categoryIcons[exp.category];
 
-                  {/* Timeline and Location */}
-                  <div className="flex flex-wrap gap-3 mb-4 text-sm text-muted-foreground">
-                    <motion.div 
-                      className="flex items-center gap-1"
-                      whileHover={{ x: 5 }}
-                    >
-                      <Calendar className="w-4 h-4" />
-                      {exp.timeline}
-                    </motion.div>
-                    {exp.location && (
-                      <motion.div 
-                        className="flex items-center gap-1"
-                        whileHover={{ x: 5 }}
-                      >
-                        <MapPin className="w-4 h-4" />
-                        {exp.location}
-                      </motion.div>
-                    )}
-                  </div>
+                return (
+                  <motion.div
+                    key={exp.id}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    whileHover={{
+                      scale: 1.05,
+                      y: -10,
+                      transition: { type: "spring", stiffness: 300 },
+                    }}
+                    transition={{
+                      duration: 0.3,
+                      delay: index * 0.1,
+                    }}
+                    className="flex-shrink-0 w-[350px] md:w-[450px] group relative"
+                  >
+                    <Card className="h-full bg-card/50 backdrop-blur-sm border-2 hover:border-primary transition-all duration-300 overflow-hidden relative group-hover:shadow-2xl group-hover:shadow-primary/20 group-hover:glow-primary">
+                      {/* Animated gradient overlay */}
+                      <motion.div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                  {/* Description */}
-                  <p className="text-sm mb-4 leading-relaxed">
-                    {exp.description}
-                  </p>
+                      <div className="p-6 relative z-10">
+                        {/* Category Badge */}
+                        <motion.div
+                          whileHover={{ scale: 1.1, rotate: 5 }}
+                          className="inline-block mb-4"
+                        >
+                          <Badge
+                            className={`${
+                              categoryColors[exp.category]
+                            } border-2 pixel-shadow font-pixel`}
+                          >
+                            <Icon className="w-4 h-4 mr-1" />
+                            {exp.category.toUpperCase()}
+                          </Badge>
+                        </motion.div>
 
-                  {/* GPA or Award */}
-                  {exp.gpa && (
-                    <motion.div
-                      className="mb-4 p-3 bg-accent/10 rounded-lg border-2 border-accent"
-                      whileHover={{ scale: 1.05 }}
-                    >
-                      <p className="text-accent font-bold text-lg">📊 GPA: {exp.gpa}</p>
-                    </motion.div>
-                  )}
-                   {exp.award && (
-                    <motion.div
-                      className="mb-4 p-3 bg-secondary/10 rounded-lg border-2 border-secondary"
-                      whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
-                      animate={{ 
-                        boxShadow: [
-                          "0 0 0 0 hsl(var(--secondary) / 0)",
-                          "0 0 20px 5px hsl(var(--secondary) / 0.3)"
-                        ]
-                      }}
-                      transition={{ 
-                        duration: 2, 
-                        repeat: Infinity, 
-                        repeatType: "reverse",
-                        ease: "easeInOut"
-                      }}
-                    >
-                      <p className="text-secondary font-bold">{exp.award}</p>
-                    </motion.div>
-                  )}
+                        {/* Title and Organization */}
+                        <h3 className="text-xl md:text-2xl font-pixel mb-2 group-hover:text-primary transition-colors">
+                          {exp.title}
+                        </h3>
+                        <p className="text-base md:text-lg font-retro font-semibold text-muted-foreground mb-2">
+                          {exp.organization}
+                        </p>
 
-                  {/* Achievements */}
-                  {exp.achievements && exp.achievements.length > 0 && (
-                    <div className="mb-4">
-                      <h4 className="text-sm font-semibold mb-2">Key Achievements:</h4>
-                      <ul className="space-y-1">
-                        {exp.achievements.map((achievement, i) => (
-                          <motion.li
-                            key={i}
-                            className="text-sm flex items-start gap-2"
-                            initial={{ opacity: 0, x: -20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            transition={{ delay: i * 0.1 }}
+                        {/* Timeline and Location */}
+                        <div className="flex flex-wrap gap-3 mb-4 text-sm font-retro text-muted-foreground">
+                          <motion.div
+                            className="flex items-center gap-1"
                             whileHover={{ x: 5 }}
                           >
-                            <span className="text-primary">✓</span>
-                            <span>{achievement}</span>
-                          </motion.li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
+                            <Calendar className="w-4 h-4" />
+                            {exp.timeline}
+                          </motion.div>
+                          {exp.location && (
+                            <motion.div
+                              className="flex items-center gap-1"
+                              whileHover={{ x: 5 }}
+                            >
+                              <MapPin className="w-4 h-4" />
+                              {exp.location}
+                            </motion.div>
+                          )}
+                        </div>
 
-                  {/* Tech Stack */}
-                  {exp.techStack && exp.techStack.length > 0 && (
-                    <div>
-                      <h4 className="text-sm font-semibold mb-2">Tech Stack:</h4>
-                      <div className="flex flex-wrap gap-2">
-                        {exp.techStack.map((tech, i) => (
-                          <motion.span
-                            key={i}
-                            className="px-3 py-1 bg-primary/10 text-primary rounded-full text-xs font-medium border border-primary/20"
-                            whileHover={{ 
-                              scale: 1.1,
-                              backgroundColor: "hsl(var(--primary) / 0.2)",
-                              borderColor: "hsl(var(--primary))"
-                            }}
-                            whileTap={{ scale: 0.95 }}
-                          >
-                            {tech}
-                          </motion.span>
-                        ))}
+                        {/* Description */}
+                        <p className="text-sm font-retro mb-4 leading-relaxed text-foreground">
+                          {exp.description}
+                        </p>
+
+                        {/* Tech Stack */}
+                        {exp.techStack && exp.techStack.length > 0 && (
+                          <div>
+                            <h4 className="text-sm font-pixel font-semibold mb-2 text-muted-foreground">
+                              Tech Stack:
+                            </h4>
+                            <div className="flex flex-wrap gap-2">
+                              {exp.techStack.map((tech, i) => (
+                                <motion.span
+                                  key={i}
+                                  className="px-3 py-1 bg-primary/10 text-primary rounded-full text-xs font-retro font-medium border border-primary/20 pixel-shadow"
+                                  whileHover={{
+                                    scale: 1.1,
+                                    backgroundColor:
+                                      "hsl(var(--primary) / 0.2)",
+                                    borderColor: "hsl(var(--primary))",
+                                  }}
+                                  whileTap={{ scale: 0.95 }}
+                                >
+                                  {tech}
+                                </motion.span>
+                              ))}
+                            </div>
+                          </div>
+                        )}
                       </div>
-                    </div>
-                  )}
-                </div>
 
-                {/* Shine effect on hover */}
+                      {/* Shine effect on hover */}
+                      <motion.div
+                        className="absolute inset-0 pointer-events-none"
+                        initial={{ x: "-100%" }}
+                        whileHover={{ x: "100%" }}
+                        transition={{ duration: 0.6 }}
+                        style={{
+                          background:
+                            "linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)",
+                        }}
+                      />
+                    </Card>
+                  </motion.div>
+                );
+              })}
+            </>
+          )}
+
+          {/* Hackathons Section */}
+          {hackathons.length > 0 && (
+            <>
+              <div className="flex-shrink-0 flex items-center justify-center w-[200px] md:w-[250px]">
                 <motion.div
-                  className="absolute inset-0 pointer-events-none"
-                  initial={{ x: "-100%" }}
-                  whileHover={{ x: "100%" }}
-                  transition={{ duration: 0.6 }}
-                  style={{
-                    background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)"
-                  }}
-                />
-              </Card>
-            </motion.div>
-          );
-        })}
-      </motion.div>
+                  className="text-center"
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <Trophy className="w-12 h-12 md:w-16 md:h-16 text-secondary mx-auto mb-3 pixel-shadow" />
+                  <h3 className="font-pixel text-lg md:text-2xl text-foreground">
+                    Hackathons
+                  </h3>
+                </motion.div>
+              </div>
+              {hackathons.map((exp, index) => {
+                const Icon = categoryIcons[exp.category];
 
-      {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        className="text-center mt-8 text-muted-foreground"
-      >
-        <p className="text-sm">Keep scrolling to see more →</p>
-      </motion.div>
-    </section>
+                return (
+                  <motion.div
+                    key={exp.id}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    whileHover={{
+                      scale: 1.05,
+                      y: -10,
+                      transition: { type: "spring", stiffness: 300 },
+                    }}
+                    transition={{
+                      duration: 0.3,
+                      delay: index * 0.1,
+                    }}
+                    className="flex-shrink-0 w-[350px] md:w-[450px] group relative"
+                  >
+                    <Card className="h-full bg-card/50 backdrop-blur-sm border-2 hover:border-secondary transition-all duration-300 overflow-hidden relative group-hover:shadow-2xl group-hover:shadow-secondary/20 group-hover:glow-secondary">
+                      {/* Animated gradient overlay */}
+                      <motion.div className="absolute inset-0 bg-gradient-to-br from-secondary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                      <div className="p-6 relative z-10">
+                        {/* Category Badge */}
+                        <motion.div
+                          whileHover={{ scale: 1.1, rotate: 5 }}
+                          className="inline-block mb-4"
+                        >
+                          <Badge
+                            className={`${
+                              categoryColors[exp.category]
+                            } border-2 pixel-shadow font-pixel`}
+                          >
+                            <Icon className="w-4 h-4 mr-1" />
+                            {exp.category.toUpperCase()}
+                          </Badge>
+                        </motion.div>
+
+                        {/* Title and Organization */}
+                        <h3 className="text-xl md:text-2xl font-pixel mb-2 group-hover:text-secondary transition-colors">
+                          {exp.title}
+                        </h3>
+                        <p className="text-base md:text-lg font-retro font-semibold text-muted-foreground mb-2">
+                          {exp.organization}
+                        </p>
+
+                        {/* Timeline */}
+                        <div className="flex flex-wrap gap-3 mb-4 text-sm font-retro text-muted-foreground">
+                          <motion.div
+                            className="flex items-center gap-1"
+                            whileHover={{ x: 5 }}
+                          >
+                            <Calendar className="w-4 h-4" />
+                            {exp.timeline}
+                          </motion.div>
+                          {exp.location && (
+                            <motion.div
+                              className="flex items-center gap-1"
+                              whileHover={{ x: 5 }}
+                            >
+                              <MapPin className="w-4 h-4" />
+                              {exp.location}
+                            </motion.div>
+                          )}
+                        </div>
+
+                        {/* Description */}
+                        <p className="text-sm font-retro mb-4 leading-relaxed text-foreground">
+                          {exp.description}
+                        </p>
+
+                        {/* Award */}
+
+                        {exp.award && (
+                          <div className="relative mb-4">
+                            <motion.div
+                              className="p-3 bg-secondary/10 rounded-lg border-2 border-secondary pixel-shadow cursor-pointer inline-block relative group"
+                              whileHover={{ scale: 1.05 }}
+                              transition={{ duration: 0.2 }}
+                            >
+                              <p className="text-secondary font-pixel">
+                                {exp.award}
+                              </p>
+
+                              {/* Popup Image */}
+                              {exp.image && (
+                                <motion.div
+                                  initial={{ opacity: 0, scale: 0.8, y: 10 }}
+                                  whileHover={{ opacity: 1, scale: 1, y: 0 }}
+                                  transition={{
+                                    duration: 0.3,
+                                    type: "spring",
+                                    stiffness: 150,
+                                  }}
+                                  className="absolute left-1/2 bottom-full mb-3 -translate-x-1/2 hidden group-hover:block z-50"
+                                >
+                                  <div className="relative">
+                                    <img
+                                      src={exp.image}
+                                      alt="Award Preview"
+                                      className="w-[350px] rounded-xl shadow-2xl border-2 border-secondary"
+                                    />
+                                    {/* Optional small arrow under image */}
+                                    <div className="absolute left-1/2 bottom-[-8px] -translate-x-1/2 w-3 h-3 bg-secondary rotate-45"></div>
+                                  </div>
+                                </motion.div>
+                              )}
+                                        </motion.div>
+                                                                        <a
+                                  href='https://www.linkedin.com/feed/update/urn:li:activity:7380857991396487168/'
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="block text-xs mt-2 text-secondary/80 hover:text-secondary underline text-center"
+                                >
+                                  Read More ↗
+                                </a>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Shine effect on hover */}
+                      <motion.div
+                        className="absolute inset-0 pointer-events-none"
+                        initial={{ x: "-100%" }}
+                        whileHover={{ x: "100%" }}
+                        transition={{ duration: 0.6 }}
+                        style={{
+                          background:
+                            "linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)",
+                        }}
+                      />
+                    </Card>
+                  </motion.div>
+                );
+              })}
+            </>
+          )}
+
+          {/* Education Section */}
+          {education.length > 0 && (
+            <>
+              <div className="flex-shrink-0 flex items-center justify-center w-[200px] md:w-[250px]">
+                <motion.div
+                  className="text-center"
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <GraduationCap className="w-12 h-12 md:w-16 md:h-16 text-accent mx-auto mb-3 pixel-shadow" />
+                  <h3 className="font-pixel text-lg md:text-2xl text-foreground">
+                    Education
+                  </h3>
+                </motion.div>
+              </div>
+              {education.map((exp, index) => {
+                const Icon = categoryIcons[exp.category];
+
+                return (
+                  <motion.div
+                    key={exp.id}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    whileHover={{
+                      scale: 1.05,
+                      y: -10,
+                      transition: { type: "spring", stiffness: 300 },
+                    }}
+                    transition={{
+                      duration: 0.3,
+                      delay: index * 0.1,
+                    }}
+                    className="flex-shrink-0 w-[350px] md:w-[450px] group relative"
+                  >
+                    <Card className="h-6/7 bg-card/50 backdrop-blur-sm border-2 hover:border-accent transition-all duration-300 overflow-hidden relative group-hover:shadow-2xl group-hover:shadow-accent/20 group-hover:glow-accent">
+                      {/* Animated gradient overlay */}
+                      <motion.div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                      <div className="p-6 relative z-10">
+                        {/* Category Badge */}
+                        <motion.div
+                          whileHover={{ scale: 1.1, rotate: 5 }}
+                          className="inline-block mb-4"
+                        >
+                          <Badge
+                            className={`${
+                              categoryColors[exp.category]
+                            } border-2 pixel-shadow font-pixel`}
+                          >
+                            <Icon className="w-4 h-4 mr-1" />
+                            {exp.category.toUpperCase()}
+                          </Badge>
+                        </motion.div>
+
+                        {/* Title and Organization */}
+                        <h3 className="text-xl md:text-2xl font-pixel mb-2 group-hover:text-accent transition-colors">
+                          {exp.title}
+                        </h3>
+                        <p className="text-base md:text-lg font-retro font-semibold text-muted-foreground mb-2">
+                          {exp.organization}
+                        </p>
+
+                        {/* Timeline and Location */}
+                        <div className="flex flex-wrap gap-3 mb-4 text-sm font-retro text-muted-foreground">
+                          <motion.div
+                            className="flex items-center gap-1"
+                            whileHover={{ x: 5 }}
+                          >
+                            <Calendar className="w-4 h-4" />
+                            {exp.timeline}
+                          </motion.div>
+                          {exp.location && (
+                            <motion.div
+                              className="flex items-center gap-1"
+                              whileHover={{ x: 5 }}
+                            >
+                              <MapPin className="w-4 h-4" />
+                              {exp.location}
+                            </motion.div>
+                          )}
+                        </div>
+
+                        {/* GPA */}
+                        {exp.gpa && (
+                          <motion.div
+                            className="mb-4 p-3 bg-accent/10 rounded-lg border-2 border-accent pixel-shadow"
+                            whileHover={{ scale: 1.05 }}
+                          >
+                            <p className="text-accent font-pixel text-lg">
+                              📊 GPA: {exp.gpa}
+                            </p>
+                          </motion.div>
+                        )}
+                      </div>
+
+                      {/* Shine effect on hover */}
+                      <motion.div
+                        className="absolute inset-0 pointer-events-none"
+                        initial={{ x: "-100%" }}
+                        whileHover={{ x: "100%" }}
+                        transition={{ duration: 0.6 }}
+                        style={{
+                          background:
+                            "linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)",
+                        }}
+                      />
+                    </Card>
+                  </motion.div>
+                );
+              })}
+            </>
+          )}
+        </div>
+      </div>
+    </div>
   );
 };

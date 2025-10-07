@@ -46,12 +46,10 @@ export function About() {
                 <div className="inline-block p-3 bg-primary/10 rounded-lg mb-4">
                   <Code2 className="w-8 h-8 text-primary" />
                 </div>
-                <h3 className="text-xl font-pixel mb-3 text-primary">Developer Journey</h3>
+                <h3 className="text-xl font-pixel mb-3 text-primary">Code Mode: Full Stack</h3>
               </div>
               <p className="text-lg font-retro leading-relaxed text-foreground">
-                Started coding at age [X], quickly fell in love with the art of building digital experiences. 
-                Specialized in full-stack development with a passion for creating elegant, user-friendly applications 
-                that solve real-world problems.
+                I craft end-to-end web experiences — from sleek, responsive interfaces to scalable backend systems. My stack blends creativity and logic, turning ideas into smooth, performance-driven, and visually engaging applications that deliver real impact. Every project is a new opportunity to learn, optimize, and push my skills further.
               </p>
             </Card>
           </motion.div>
@@ -62,12 +60,10 @@ export function About() {
                 <div className="inline-block p-3 bg-secondary/10 rounded-lg mb-4">
                   <Brain className="w-8 h-8 text-secondary" />
                 </div>
-                <h3 className="text-xl font-pixel mb-3 text-secondary">AI Enthusiast</h3>
+                <h3 className="text-xl font-pixel mb-3 text-secondary">Curiosity Mode: AI, Quantum & Security</h3>
               </div>
               <p className="text-lg font-retro leading-relaxed text-foreground">
-                Fascinated by artificial intelligence and machine learning. Currently exploring neural networks, 
-                natural language processing, and computer vision to build intelligent systems that push the 
-                boundaries of what's possible.
+                I’m endlessly curious about how intelligence, automation, and computation shape our world. Whether it’s training AI models, exploring quantum algorithms, or understanding cybersecurity principles, I love experimenting at the crossroads of innovation and practicality. Always leveling up!
               </p>
             </Card>
           </motion.div>
@@ -88,10 +84,9 @@ export function About() {
             <div className="flex items-start gap-4">
               <Zap className="w-10 h-10 text-accent flex-shrink-0 animate-glow-pulse" />
               <div>
-                <h3 className="text-xl font-pixel mb-3 text-accent">Fun Fact!</h3>
+                <h3 className="text-xl font-pixel mb-3 text-accent">Player Info: Fun Fact</h3>
                 <p className="text-lg font-retro text-foreground">
-                  When I'm not coding, you can find me [hobby/interest]. I believe the best code is written 
-                  with a clear mind and creative inspiration from diverse experiences! 🎮✨
+                  I can’t start my day without a good cup of coffee ☕ to fuel my creativity. I love yapping away with friends sharing stories and ideas. And when I need to unwind, it’s all about jamming to my favorite music 🎵 or binge-watching a great series 📺.
                 </p>
               </div>
             </div>
@@ -109,20 +104,26 @@ export function About() {
           <p className="text-xl font-retro text-muted-foreground mb-4">
             Building with modern technologies
           </p>
-          <div className="flex flex-wrap justify-center gap-3">
-            {['React', 'TypeScript', 'Node.js', 'Python', 'TensorFlow', 'PostgreSQL'].map((tech, index) => (
-              <motion.span
-                key={tech}
-                initial={{ opacity: 0, scale: 0 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.7 + index * 0.1 }}
-                className="px-4 py-2 bg-primary/10 text-primary border-2 border-primary rounded-lg pixel-shadow font-retro text-lg hover:scale-110 transition-transform cursor-default"
-              >
-                {tech}
-              </motion.span>
-            ))}
-          </div>
+<div className="flex flex-wrap justify-center gap-3">
+  {[
+    'React', 'JavaScript', 'TypeScript', 'Node.js', 'Express.js', 
+    'MongoDB', 'PostgreSQL','Tailwind CSS', 'Python', 'n8n',
+    'OpenAI', 'LangChain', 'Qiskit', 'Quantum Algorithms', 
+    'GitHub', 'Firebase', 'Figma', 'Canva', 'REST APIs', 'Upstash Redis'
+  ].map((tech, index) => (
+    <motion.span
+      key={tech}
+      initial={{ opacity: 0, scale: 0 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true }}
+      transition={{ delay: 0.7 + index * 0.1 }}
+      className="px-4 py-2 bg-primary/10 text-primary border-2 border-primary rounded-lg pixel-shadow font-retro text-lg hover:scale-110 transition-transform cursor-default"
+    >
+      {tech}
+    </motion.span>
+  ))}
+</div>
+
         </motion.div>
       </div>
     </section>

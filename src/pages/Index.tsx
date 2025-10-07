@@ -6,6 +6,7 @@ import { Skills } from "@/components/Skills";
 import { Experience } from "@/components/Experience";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
+import { HorizontalScrollSection } from "@/components/HorizontalScrollSection";
 
 const Index = () => {
   return (
@@ -14,12 +15,16 @@ const Index = () => {
       <main className="pt-16">
         <Hero />
         <About />
-        <Projects />
+        <HorizontalScrollSection>
+          <Experience />
+          <div className="min-w-screen h-screen flex flex-col justify-center px-8 md:px-16">
+          </div>
+        </HorizontalScrollSection>
         <Skills />
-        <Experience />
+        <Projects />
         <Contact />
+        <Footer />
       </main>
-      <Footer />
     </div>
   );
 };

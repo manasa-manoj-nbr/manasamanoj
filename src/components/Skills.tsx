@@ -1,6 +1,13 @@
 import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
-import { Code2, Database, Brain, Wrench, Globe, Rocket } from "lucide-react";
+import { Code2, Database, Brain, Wrench, Globe, Rocket, ChevronDown } from "lucide-react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { useState } from "react";
 
 interface Skill {
   name: string;
@@ -15,8 +22,9 @@ const skillCategories = [
     icon: Globe,
     color: "primary",
     skills: [
-      { name: "React/Next.js", level: 90 },
+      { name: "React.js", level: 90 },
       { name: "TypeScript", level: 85 },
+      { name: "JavaScript", level: 85 },
       { name: "Tailwind CSS", level: 95 },
       { name: "HTML/CSS", level: 95 },
     ],
@@ -26,21 +34,23 @@ const skillCategories = [
     icon: Database,
     color: "secondary",
     skills: [
-      { name: "Node.js", level: 85 },
-      { name: "Python", level: 90 },
-      { name: "PostgreSQL", level: 80 },
-      { name: "MongoDB", level: 75 },
+      { name: "Node.js", level: 80 },
+      { name: "Express.js", level: 85 },
+      { name: "PostgreSQL", level: 70 },
+      { name: "MongoDB", level: 80 },
+      { name: "REST APIs", level: 80 },
     ],
   },
   {
-    title: "AI/ML",
+    title: "AI / Quantum",
     icon: Brain,
     color: "accent",
     skills: [
-      { name: "TensorFlow", level: 80 },
-      { name: "PyTorch", level: 75 },
-      { name: "NLP", level: 70 },
-      { name: "Computer Vision", level: 75 },
+      { name: "n8n", level: 90 },
+      { name: "OpenAI / LangChain", level: 80 },
+      { name: "Quantum Algorithms", level: 70 },
+      { name: "Qiskit", level: 70 },
+      { name: "Cybersecurity Basics", level: 60 },
     ],
   },
   {
@@ -48,18 +58,20 @@ const skillCategories = [
     icon: Wrench,
     color: "primary",
     skills: [
-      { name: "Git/GitHub", level: 90 },
-      { name: "Docker", level: 75 },
-      { name: "AWS", level: 70 },
-      { name: "CI/CD", level: 80 },
+      { name: "Canva", level: 90 },
+      { name: "Git/GitHub", level: 70 },
+      { name: "Figma", level: 80 },
+      { name: "Linux / Command Line", level: 80 },
     ],
   },
 ];
 
 export function Skills() {
+  const [openItems, setOpenItems] = useState<string[]>([]);
+
   return (
-    <section id="skills" className="py-20 px-4">
-      <div className="container mx-auto max-w-7xl">
+    <section id="skills" className="py-20 px-4 bg-muted/30">
+      <div className="container mx-auto max-w-5xl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -72,146 +84,155 @@ export function Skills() {
           </h2>
           <div className="w-24 h-1 bg-primary mx-auto mb-6 pixel-shadow" />
           <p className="text-xl font-retro text-muted-foreground max-w-2xl mx-auto">
-            Level up! Here's my tech stack and proficiency levels 🎮
+            Level up! Click to explore my tech stack 🎮
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-8">
-          {skillCategories.map((category, categoryIndex) => {
-            const Icon = category.icon;
-            return (
-              <motion.div
-                key={category.title}
-                initial={{ opacity: 0, x: categoryIndex % 2 === 0 ? -50 : 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: categoryIndex * 0.1 }}
-              >
-                <motion.div
-                  whileHover={{ 
-                    rotateY: 5,
-                    rotateX: 5,
-                    scale: 1.02,
-                  }}
-                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                  style={{ transformStyle: "preserve-3d" }}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2 }}
+        >
+          <Accordion 
+            type="multiple" 
+            className="space-y-4"
+            value={openItems}
+            onValueChange={setOpenItems}
+          >
+            {skillCategories.map((category, categoryIndex) => {
+              const Icon = category.icon;
+              const isOpen = openItems.includes(`item-${categoryIndex}`);
+              
+              return (
+                <AccordionItem 
+                  key={category.title} 
+                  value={`item-${categoryIndex}`}
+                  className="border-none"
                 >
-                  <Card className="p-6 gradient-card pixel-shadow hover:glow-primary transition-all duration-300 border-2 border-primary/20 h-full relative overflow-hidden group">
-                    {/* Comic-style burst effect on hover */}
-                    <motion.div
-                      className="absolute -top-4 -right-4 w-20 h-20 opacity-0 group-hover:opacity-100 pointer-events-none"
-                      initial={{ scale: 0, rotate: 0 }}
-                      whileHover={{ scale: 1, rotate: 45 }}
-                      transition={{ type: "spring", stiffness: 400, damping: 15 }}
-                    >
-                      <div className="relative w-full h-full">
-                        <div className="absolute inset-0 bg-accent/30 rounded-full blur-xl" />
-                        <motion.div 
-                          className="absolute inset-0 text-accent font-pixel text-xs flex items-center justify-center"
-                          animate={{ rotate: [0, 360] }}
-                          transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                        >
-                          ⚡
-                        </motion.div>
-                      </div>
-                    </motion.div>
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className={`p-3 rounded-lg bg-${category.color}/10`}>
-                      <Icon className={`w-6 h-6 text-${category.color}`} />
-                    </div>
-                    <h3 className="text-2xl font-pixel text-foreground">{category.title}</h3>
-                  </div>
-
-                  <div className="space-y-4">
-                    {category.skills.map((skill, skillIndex) => (
-                      <motion.div
-                        key={skill.name}
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: categoryIndex * 0.1 + skillIndex * 0.05 }}
-                        whileHover={{ 
-                          scale: 1.05,
-                          x: 10,
-                          transition: { type: "spring", stiffness: 400, damping: 10 }
-                        }}
-                        className="group cursor-pointer"
-                      >
-                        <div className="flex justify-between items-center mb-2">
-                          <motion.span 
-                            className="font-retro text-lg text-foreground group-hover:text-primary transition-colors duration-300"
-                            whileHover={{ scale: 1.05 }}
+                  <motion.div
+                    initial={{ opacity: 0, x: -50 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: categoryIndex * 0.1 }}
+                    whileHover={{ scale: 1.02 }}
+                  >
+                    <Card className={`gradient-card pixel-shadow border-2 overflow-hidden transition-all duration-300 ${
+                      isOpen 
+                        ? 'border-primary glow-primary' 
+                        : 'border-primary/20 hover:border-primary/50'
+                    }`}>
+                      <AccordionTrigger className="hover:no-underline px-6 py-5 group">
+                        <div className="flex items-center gap-4 w-full">
+                          {/* Icon */}
+                          <motion.div 
+                            className={`p-3 rounded-lg bg-${category.color}/10 group-hover:bg-${category.color}/20 transition-colors`}
+                            whileHover={{ rotate: 360 }}
+                            transition={{ duration: 0.5 }}
                           >
-                            {skill.name}
-                          </motion.span>
-                          <motion.span 
-                            className="font-pixel text-sm text-primary"
-                            animate={{ 
-                              scale: [1, 1.1, 1],
-                            }}
-                            transition={{ 
-                              duration: 2,
-                              repeat: Infinity,
-                              repeatType: "reverse"
-                            }}
+                            <Icon className={`w-8 h-8 text-${category.color}`} />
+                          </motion.div>
+                          
+                          {/* Title */}
+                          <h3 className="text-2xl md:text-3xl font-pixel text-foreground group-hover:text-primary transition-colors flex-1 text-left">
+                            {category.title}
+                          </h3>
+                          
+                          {/* Skill count badge */}
+                          <motion.div 
+                            className="bg-primary/10 text-primary px-3 py-1 rounded-full font-retro text-sm pixel-shadow hidden md:block"
+                            whileHover={{ scale: 1.1 }}
                           >
-                            {skill.level}%
-                          </motion.span>
+                            {category.skills.length} skills
+                          </motion.div>
+                          
+                          {/* Arrow indicator (hidden - AccordionTrigger provides its own) */}
                         </div>
-                        
-                        {/* Energy Bar Style Progress */}
-                        <div className="relative h-6 bg-muted rounded-lg overflow-hidden border-2 border-primary/30 pixel-shadow group-hover:border-primary transition-colors duration-300">
-                          <motion.div
-                            initial={{ width: 0 }}
-                            whileInView={{ width: `${skill.level}%` }}
-                            viewport={{ once: true }}
-                            transition={{ 
-                              delay: categoryIndex * 0.1 + skillIndex * 0.05 + 0.2,
-                              duration: 1,
-                              ease: "easeOut"
-                            }}
-                            className="absolute inset-y-0 left-0 gradient-hero group-hover:animate-pulse"
-                            style={{
-                              boxShadow: `0 0 10px hsl(var(--${category.color}) / 0.5)`,
-                            }}
-                          />
-                          
-                          {/* Shimmer effect on hover */}
-                          <motion.div
-                            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
-                            initial={{ x: "-100%" }}
-                            whileHover={{ x: "200%" }}
-                            transition={{ duration: 0.8, ease: "easeInOut" }}
-                          />
-                          
-                          {/* Pixel-style segments */}
-                          <div className="absolute inset-0 flex">
-                            {Array.from({ length: 10 }).map((_, i) => (
-                              <div
-                                key={i}
-                                className="flex-1 border-r border-background/20"
-                              />
-                            ))}
-                          </div>
-                          
-                          {/* Glowing particles on hover */}
-                          <motion.div
-                            className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                            style={{
-                              background: `radial-gradient(circle at 50% 50%, hsl(var(--${category.color}) / 0.3) 0%, transparent 70%)`,
-                              filter: "blur(8px)",
-                            }}
-                          />
+                      </AccordionTrigger>
+                      
+                      <AccordionContent>
+                        <div className="px-6 pb-6 pt-2 space-y-4">
+                          {category.skills.map((skill, skillIndex) => (
+                            <motion.div
+                              key={skill.name}
+                              initial={{ opacity: 0, y: -10 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ delay: skillIndex * 0.05 }}
+                              whileHover={{ 
+                                scale: 1.02,
+                                x: 10,
+                                transition: { type: "spring", stiffness: 400, damping: 10 }
+                              }}
+                              className="group/skill cursor-pointer"
+                            >
+                              <div className="flex justify-between items-center mb-2">
+                                <motion.span 
+                                  className="font-retro text-lg text-foreground group-hover/skill:text-primary transition-colors duration-300"
+                                  whileHover={{ scale: 1.05 }}
+                                >
+                                  {skill.name}
+                                </motion.span>
+                                <motion.span 
+                                  className="font-pixel text-sm text-primary"
+                                  animate={{ 
+                                    scale: [1, 1.1, 1],
+                                  }}
+                                  transition={{ 
+                                    duration: 2,
+                                    repeat: Infinity,
+                                    repeatType: "reverse",
+                                    delay: skillIndex * 0.2
+                                  }}
+                                >
+                                  {skill.level}%
+                                </motion.span>
+                              </div>
+                              
+                              {/* Energy Bar Style Progress */}
+                              <div className="relative h-6 bg-muted rounded-lg overflow-hidden border-2 border-primary/30 pixel-shadow group-hover/skill:border-primary transition-colors duration-300">
+                                <motion.div
+                                  initial={{ width: 0 }}
+                                  animate={{ width: `${skill.level}%` }}
+                                  transition={{ 
+                                    delay: skillIndex * 0.05 + 0.2,
+                                    duration: 1,
+                                    ease: "easeOut"
+                                  }}
+                                  className="absolute inset-y-0 left-0 bg-gradient-to-r from-primary to-secondary group-hover/skill:animate-pulse"
+                                  style={{
+                                    boxShadow: `0 0 10px hsl(var(--primary) / 0.5)`,
+                                  }}
+                                />
+                                
+                                {/* Shimmer effect on hover */}
+                                <motion.div
+                                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                                  initial={{ x: "-100%" }}
+                                  whileHover={{ x: "200%" }}
+                                  transition={{ duration: 0.8, ease: "easeInOut" }}
+                                />
+                                
+                                {/* Pixel-style segments */}
+                                <div className="absolute inset-0 flex">
+                                  {Array.from({ length: 10 }).map((_, i) => (
+                                    <div
+                                      key={i}
+                                      className="flex-1 border-r border-background/20"
+                                    />
+                                  ))}
+                                </div>
+                              </div>
+                            </motion.div>
+                          ))}
                         </div>
-                      </motion.div>
-                    ))}
-                  </div>
-                  </Card>
-                </motion.div>
-              </motion.div>
-            );
-          })}
-        </div>
+                      </AccordionContent>
+                    </Card>
+                  </motion.div>
+                </AccordionItem>
+              );
+            })}
+          </Accordion>
+        </motion.div>
 
         {/* Achievement Badges */}
         <motion.div
@@ -224,9 +245,9 @@ export function Skills() {
           <h3 className="text-2xl font-pixel mb-6 text-foreground">Achievements Unlocked 🏆</h3>
           <div className="flex flex-wrap justify-center gap-4">
             {[
-              { icon: Code2, label: "100+ Projects", color: "primary" },
-              { icon: Rocket, label: "5+ Years", color: "secondary" },
-              { icon: Brain, label: "AI Certified", color: "accent" },
+              { icon: Code2, label: "180+ Commits", color: "primary" },
+              { icon: Rocket, label: "HacKP Hackathon Winner", color: "secondary" },
+              { icon: Brain, label: "Quantum Certification", color: "accent" },
             ].map((achievement, index) => {
               const Icon = achievement.icon;
               return (

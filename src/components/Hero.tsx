@@ -1,23 +1,23 @@
 import { motion } from "framer-motion";
 import { TypeAnimation } from "react-type-animation";
-import { Github, Linkedin, Twitter } from "lucide-react";
+import { Github, Linkedin, Instagram, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import pixelAvatar from "@/assets/pixel-avatar.png";
-import heroBg from "@/assets/hero-bg.png";
+import pixelAvatar from "@/assets/hero.png";
+import heroBg from "@/assets/heroo-bg.png";
 
 export function Hero() {
   return (
-    <section 
+    <section
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
       style={{
         backgroundImage: `url(${heroBg})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
+        backgroundSize: "cover",
+        backgroundPosition: "center",
       }}
     >
       {/* Overlay for better text readability */}
       <div className="absolute inset-0 bg-background/80 backdrop-blur-sm" />
-      
+
       <div className="container relative z-10 px-4 py-20">
         <div className="max-w-4xl mx-auto text-center">
           {/* Avatar */}
@@ -27,10 +27,10 @@ export function Hero() {
             transition={{ type: "spring", duration: 1, bounce: 0.5 }}
             className="mb-8 inline-block"
           >
-            <div className="w-40 h-40 mx-auto pixel-shadow rounded-xl overflow-hidden border-4 border-primary glow-primary">
-              <img 
-                src={pixelAvatar} 
-                alt="Pixel Art Avatar" 
+            <div className="w-48 h-48 md:w-72 md:h-72 mx-auto pixel-shadow rounded-xl overflow-hidden border-4 border-primary glow-primary">
+              <img
+                src={pixelAvatar}
+                alt="Pixel Art Avatar"
                 className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
               />
             </div>
@@ -41,9 +41,9 @@ export function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="text-3xl md:text-5xl lg:text-6xl font-pixel mb-6 text-foreground leading-tight"
+            className="text-3xl md:text-5xl lg:text-6xl font-pixel mb-2 text-foreground leading-tight"
           >
-            Your Name Here
+            Manasa Manoj
           </motion.h1>
 
           {/* Typing Animation */}
@@ -51,17 +51,19 @@ export function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6 }}
-            className="mb-8 h-20 flex items-center justify-center"
+            className=" h-20 flex items-center justify-center"
           >
             <TypeAnimation
               sequence={[
-                'Full Stack Developer 💻',
+                "Full Stack Developer 💻",
                 2000,
-                'AI Engineer 🤖',
+                "AI Engineer",
                 2000,
-                'Tech Enthusiast ⚙️',
+                "Quantum Computing",
                 2000,
-                'Problem Solver 🧠',
+                "Problem Solver",
+                2000,
+                "Automation Developer",
                 2000,
               ]}
               wrapper="span"
@@ -76,7 +78,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.9 }}
-            className="flex gap-4 justify-center mb-12"
+            className="flex gap-4 justify-center mb-6"
           >
             <Button
               variant="outline"
@@ -84,7 +86,11 @@ export function Hero() {
               className="pixel-shadow hover:glow-primary hover:scale-110 transition-all duration-300 border-2 border-primary"
               asChild
             >
-              <a href="https://github.com" target="_blank" rel="noopener noreferrer">
+              <a
+                href="https://github.com/manasa-manoj-nbr"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <Github className="h-5 w-5" />
                 <span className="sr-only">GitHub</span>
               </a>
@@ -95,7 +101,11 @@ export function Hero() {
               className="pixel-shadow hover:glow-primary hover:scale-110 transition-all duration-300 border-2 border-primary"
               asChild
             >
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+              <a
+                href="https://www.linkedin.com/in/manasa-manoj-294220310/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <Linkedin className="h-5 w-5" />
                 <span className="sr-only">LinkedIn</span>
               </a>
@@ -106,9 +116,13 @@ export function Hero() {
               className="pixel-shadow hover:glow-primary hover:scale-110 transition-all duration-300 border-2 border-primary"
               asChild
             >
-              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
-                <Twitter className="h-5 w-5" />
-                <span className="sr-only">Twitter</span>
+              <a
+                href="https://www.instagram.com/maanxsaa.manojj/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Instagram className="h-5 w-5" />
+                <span className="sr-only">Instagram</span>
               </a>
             </Button>
           </motion.div>
@@ -123,7 +137,11 @@ export function Hero() {
             <Button
               size="lg"
               className="pixel-shadow text-lg font-retro hover:scale-105 transition-transform bg-primary hover:bg-primary/90 glow-primary"
-              onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() =>
+                document
+                  .getElementById("projects")
+                  ?.scrollIntoView({ behavior: "smooth" })
+              }
             >
               View My Work
             </Button>
@@ -131,9 +149,24 @@ export function Hero() {
               size="lg"
               variant="outline"
               className="pixel-shadow text-lg font-retro hover:scale-105 transition-transform border-2 border-secondary text-secondary hover:glow-secondary"
-              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() =>
+                document
+                  .getElementById("contact")
+                  ?.scrollIntoView({ behavior: "smooth" })
+              }
             >
               Get In Touch
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              className="pixel-shadow text-lg font-retro hover:scale-105 transition-transform border-2 border-accent text-accent hover:glow-accent"
+              asChild
+            >
+              <a href="/resume.pdf" download="Manasa_Manoj_Resume.pdf">
+                <Download className="w-5 h-5 mr-2" />
+                Download Resume
+              </a>
             </Button>
           </motion.div>
 

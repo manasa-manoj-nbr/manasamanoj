@@ -1,73 +1,77 @@
-# Welcome to your Lovable project
+# Portfolio - Manasa Manoj
 
-## Project info
+A pixel-art comic-style portfolio website built with React, TypeScript, Tailwind CSS, and Framer Motion.
 
-**URL**: https://lovable.dev/projects/4e41b7db-7ff6-4b02-a455-d5b93f1b8cac
+## Features
 
-## How can I edit this code?
+- 🎨 Pixel-art comic book theme
+- 🎬 Horizontal scroll-jacking for Experience & Projects sections
+- 📱 Fully responsive design
+- ✨ Smooth animations with Framer Motion
+- 📧 Contact form with EmailJS integration
+- 📄 Resume download button
 
-There are several ways of editing your application.
+## Setup
 
-**Use Lovable**
+### 1. Install Dependencies
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/4e41b7db-7ff6-4b02-a455-d5b93f1b8cac) and start prompting.
+```bash
+npm install
+```
 
-Changes made via Lovable will be committed automatically to this repo.
+### 2. Add Your Resume
 
-**Use your preferred IDE**
+Place your resume PDF in the `/public` folder as `resume.pdf`:
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+```
+public/
+  ├── resume.pdf          ← Add your resume here
+  ├── favicon.ico
+  ├── placeholder.svg
+  └── robots.txt
+```
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+The resume download button in the Hero section will automatically link to `/public/resume.pdf`.
 
-Follow these steps:
+### 3. Configure Contact Form (Optional)
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+To enable the contact form, add EmailJS credentials to `.env.local`:
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+```env
+VITE_EMAILJS_SERVICE_ID=service_xxx
+VITE_EMAILJS_TEMPLATE_ID=template_xxx
+VITE_EMAILJS_PUBLIC_KEY=your_public_key
+```
 
-# Step 3: Install the necessary dependencies.
-npm i
+See the contact form configuration section below for more details.
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+### 4. Run Development Server
+
+```bash
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+## Customization
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Update Your Information
 
-**Use GitHub Codespaces**
+1. **Hero Section** (`src/components/Hero.tsx`):
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+   - Name, bio, typing animation text
+   - Social media links
+   - Avatar image (in `src/assets/hero.png`)
 
-## What technologies are used for this project?
+2. **Experience Section** (`src/components/Experience.tsx`):
 
-This project is built with:
+   - Update the `experiences` array with your work, hackathons, and education
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+3. **Projects Section** (`src/components/Projects.tsx`):
 
-## How can I deploy this project?
+   - Update the `projects` array with your projects
 
-Simply open [Lovable](https://lovable.dev/projects/4e41b7db-7ff6-4b02-a455-d5b93f1b8cac) and click on Share -> Publish.
+4. **Skills Section** (`src/components/Skills.tsx`):
 
-## Can I connect a custom domain to my Lovable project?
+   - Update the `skillCategories` array with your skills
 
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+5. **Contact Section** (`src/components/Contact.tsx`):
+   - Update email address and location
