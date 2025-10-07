@@ -13,121 +13,73 @@ export function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
-  // NOTE: To enable sending, set VITE_CONTACT_FORM_ENDPOINT in your .env (see README).
-  // The endpoint should accept a POST with JSON { name, email, message } and
-  // respond with a 2xx status on success. Example providers: Formspree, Netlify
-  // Forms, or a custom serverless function.
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsSubmitting(true);
+const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+  setIsSubmitting(true);
 
-    const form = e.target as HTMLFormElement;
-    const formData = new FormData(form);
-    const name = (formData.get("name") as string) || "";
-    const email = (formData.get("email") as string) || "";
-    const message = (formData.get("message") as string) || "";
+  const form = e.target as HTMLFormElement;
+  const formData = new FormData(form);
+  const name = (formData.get("name") as string) || "";
+  const fromemail = (formData.get("email") as string) || "";
+  const message = (formData.get("message") as string) || "";
 
-    // Basic client-side validation
-    if (!name.trim() || !email.trim() || !message.trim()) {
-      toast({
-        title: "Validation Error",
-        description: "Please fill in name, email and message fields.",
-        variant: "destructive",
-      });
-      setIsSubmitting(false);
-      return;
-    }
-
-    const endpoint = import.meta.env.VITE_CONTACT_FORM_ENDPOINT as
-      | string
-      | undefined;
-
-    // EmailJS fallback configuration (client-side email sending)
-    const emailJsService = import.meta.env.VITE_EMAILJS_SERVICE_ID as
-      | string
-      | undefined;
-    const emailJsTemplate = import.meta.env.VITE_EMAILJS_TEMPLATE_ID as
-      | string
-      | undefined;
-    const emailJsPublic = import.meta.env.VITE_EMAILJS_PUBLIC_KEY as
-      | string
-      | undefined;
-
-    // 1) Prefer a custom server endpoint
-    if (endpoint) {
-      try {
-        const res = await fetch(endpoint, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name, email, message }),
-        });
-
-        if (!res.ok) {
-          const text = await res.text().catch(() => "");
-          throw new Error(text || `HTTP ${res.status}`);
-        }
-
-        toast({
-          title: "Message Sent! 🚀",
-          description: "Thanks for reaching out! I'll get back to you soon.",
-        });
-
-        form.reset();
-        return;
-      } catch (err) {
-        console.error("Contact submit error (endpoint):", err);
-        toast({
-          title: "Error sending message",
-          description:
-            err instanceof Error
-              ? err.message
-              : "Something went wrong. Please try again later.",
-          variant: "destructive",
-        });
-        setIsSubmitting(false);
-        return;
-      }
-    }
-
-    // 2) If no endpoint, try EmailJS client-side (requires EmailJS keys)
-    if (emailJsService && emailJsTemplate && emailJsPublic) {
-      try {
-        await emailjs.send(
-          emailJsService,
-          emailJsTemplate,
-          { from_name: name, from_email: email, message },
-          emailJsPublic
-        );
-
-        toast({
-          title: "Message Sent! 🚀",
-          description: "Message sent via EmailJS. I'll get back to you soon.",
-        });
-
-        form.reset();
-        return;
-      } catch (err) {
-        console.error("Contact submit error (EmailJS):", err);
-        toast({
-          title: "Error sending message",
-          description:
-            "EmailJS failed to send the message. Check your EmailJS keys and template.",
-          variant: "destructive",
-        });
-        setIsSubmitting(false);
-        return;
-      }
-    }
-
-    // 3) No configuration available
+  // ✅ Basic validation
+  if (!name.trim() || !fromemail.trim() || !message.trim()) {
     toast({
-      title: "Not Configured",
-      description:
-        "Contact form is not configured. Please set VITE_CONTACT_FORM_ENDPOINT or EmailJS keys in your environment.",
+      title: "Validation Error",
+      description: "Please fill in your name, email, and message.",
       variant: "destructive",
     });
     setIsSubmitting(false);
-  };
+    return;
+  }
+
+  // ✅ Environment vars
+  const emailJsService = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+  const emailJsTemplate = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+  const emailJsPublic = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+  if (emailJsService && emailJsTemplate && emailJsPublic) {
+    try {
+      await emailjs.send(
+        emailJsService,
+        emailJsTemplate,
+        {
+          name,        // matches {{name}} in your EmailJS template
+          fromemail,   // matches {{fromemail}} in your EmailJS template
+          message,
+        },
+        emailJsPublic
+      );
+
+      toast({
+        title: "Message Sent! 🚀",
+        description: "Thanks for reaching out! I'll get back to you soon.",
+      });
+
+      form.reset();
+    } catch (err) {
+      console.error("EmailJS error:", err);
+      toast({
+        title: "Error sending message",
+        description:
+          "EmailJS failed to send the message. Please check your configuration.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  } else {
+    toast({
+      title: "Configuration Error",
+      description:
+        "EmailJS credentials are missing. Please check your environment variables.",
+      variant: "destructive",
+    });
+    setIsSubmitting(false);
+  }
+};
+
 
   return (
     <section id="contact" className="py-20 px-4 bg-muted/30">
