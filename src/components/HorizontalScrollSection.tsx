@@ -18,7 +18,7 @@ export function HorizontalScrollSection({
   // Convert scroll progress to horizontal translation
   // scrollYProgress: 0 → 1 (scrolling down), 1 → 0 (scrolling up)
   // x: 0% → -66.666% (scrolling down), -66.666% → 0% (scrolling up)
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-82%"]);
+  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-100%"]);
 
   return (
     <section
