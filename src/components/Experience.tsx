@@ -127,7 +127,7 @@ export const Experience = () => {
   const x = useTransform(scrollYProgress, [0, 1], ["0%", "-50%"]);
 
   return (
-    <section id="experience" className="py-20 overflow-hidden" ref={containerRef}>
+    <section id="experience" className="py-20 overflow-hidden relative" ref={containerRef}>
       <div className="container mx-auto px-4 mb-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -158,12 +158,15 @@ export const Experience = () => {
               initial={{ opacity: 0, scale: 0.8 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
               whileHover={{ 
                 scale: 1.05,
                 rotateY: 5,
                 z: 50,
                 transition: { type: "spring", stiffness: 300 }
+              }}
+              transition={{ 
+                duration: 0.3,
+                delay: index * 0.1
               }}
               className="flex-shrink-0 w-[400px] md:w-[500px] group relative"
             >
@@ -171,6 +174,7 @@ export const Experience = () => {
               <motion.div
                 initial={{ scale: 0, rotate: 0 }}
                 whileHover={{ scale: 1, rotate: 180 }}
+                transition={{ duration: 0.3 }}
                 className="absolute -top-6 -right-6 text-6xl z-10 pointer-events-none"
               >
                 ⚡
@@ -180,14 +184,6 @@ export const Experience = () => {
                 {/* Animated gradient overlay */}
                 <motion.div
                   className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  animate={{
-                    background: [
-                      "linear-gradient(135deg, hsl(var(--primary) / 0.05), transparent, hsl(var(--secondary) / 0.05))",
-                      "linear-gradient(225deg, hsl(var(--secondary) / 0.05), transparent, hsl(var(--primary) / 0.05))",
-                      "linear-gradient(135deg, hsl(var(--primary) / 0.05), transparent, hsl(var(--secondary) / 0.05))",
-                    ]
-                  }}
-                  transition={{ duration: 3, repeat: Infinity }}
                 />
 
                 {/* Image/Certificate section */}
@@ -208,14 +204,14 @@ export const Experience = () => {
                         key={i}
                         className="absolute w-2 h-2 bg-primary rounded-full opacity-0 group-hover:opacity-60"
                         animate={{
-                          y: [0, -100],
-                          x: [0, (i - 1) * 30],
-                          opacity: [0, 0.6, 0]
+                          y: -100,
+                          x: (i - 1) * 30
                         }}
                         transition={{
                           duration: 2,
                           repeat: Infinity,
-                          delay: i * 0.3
+                          delay: i * 0.3,
+                          ease: "easeOut"
                         }}
                         style={{
                           left: `${20 + i * 30}%`,
@@ -280,18 +276,22 @@ export const Experience = () => {
                       <p className="text-accent font-bold text-lg">📊 GPA: {exp.gpa}</p>
                     </motion.div>
                   )}
-                  {exp.award && (
+                   {exp.award && (
                     <motion.div
                       className="mb-4 p-3 bg-secondary/10 rounded-lg border-2 border-secondary"
-                      whileHover={{ scale: 1.05 }}
+                      whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
                       animate={{ 
                         boxShadow: [
                           "0 0 0 0 hsl(var(--secondary) / 0)",
-                          "0 0 20px 5px hsl(var(--secondary) / 0.3)",
-                          "0 0 0 0 hsl(var(--secondary) / 0)"
+                          "0 0 20px 5px hsl(var(--secondary) / 0.3)"
                         ]
                       }}
-                      transition={{ duration: 2, repeat: Infinity }}
+                      transition={{ 
+                        duration: 2, 
+                        repeat: Infinity, 
+                        repeatType: "reverse",
+                        ease: "easeInOut"
+                      }}
                     >
                       <p className="text-secondary font-bold">{exp.award}</p>
                     </motion.div>
