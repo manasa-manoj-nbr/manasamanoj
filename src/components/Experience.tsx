@@ -8,17 +8,15 @@ import {
   MapPin,
   Calendar,
 } from "lucide-react";
-import { useRef } from "react";
 
 interface ExperienceItem {
   id: string;
-  category: "work" | "hackathon" | "education";
+  category: "work" | "achievements" | "education";
   title: string;
   organization: string;
   location?: string;
   timeline: string;
   description?: string;
-  achievements?: string[];
   techStack?: string[];
   gpa?: string;
   award?: string;
@@ -27,11 +25,39 @@ interface ExperienceItem {
 
 const experiences: ExperienceItem[] = [
   {
+    id: "work-1",
+    category: "work",
+    title: "Front-End Developer",
+    organization: "Kerala Police Cyberdome -Grapnel Team",
+    location: "Kerala, India",
+    timeline: "Oct 2025 - Present",
+    description:
+      "Developed a responsive front-end for the CSAM Takedown and Trace Dashboard, enabling victims to report content and analysts to monitor cases efficiently. Built “Trace an Object” features and Takedown workflows using public crowdsourcing platforms, helping analysts gather leads for ongoing cases and facilitating rapid content removal.",
+    techStack: [
+      "ReactJS",
+      "TypeScript",
+      "Tanstack Query/Forms",
+      "Tailwind CSS",
+      "Rest APIs",
+    ],
+  },
+  {
     id: "work-2",
+    category: "work",
+    title: "Student Researcher",
+    organization: "Sarvam AI",
+    location: "remote",
+    timeline: "Aug 2025 - Present",
+    description:
+      "Working on creating a 1000-hour synthetic audio dataset for Malayalam, contributing to AI research and  model development. Responsible for ensuring high-quality, annotated data in collaboration with the team",
+    techStack: ["IndicF5", "Python", "openai"],
+  },
+  {
+    id: "work-3",
     category: "work",
     title: "AI Developer",
     organization: "EdQueries LLP",
-    location: "Bangalore, India",
+    location: "remote",
     timeline: "May 2025 - Present",
     description:
       "Built and integrated an AI chatbot for EdQueries LMS, achieving a 98% success rate across 1,000+ queries. Optimized workflows to reduce response time by 65% and deployed contextual search, improving answer accuracy by 40%. Also worked on marketing automation, streamlining campaigns and enhancing lead engagement.",
@@ -45,7 +71,7 @@ const experiences: ExperienceItem[] = [
     ],
   },
   {
-    id: "work-1",
+    id: "work-4",
     category: "work",
     title: "Research Intern",
     organization: "NIT Calicut",
@@ -57,7 +83,7 @@ const experiences: ExperienceItem[] = [
   },
   {
     id: "hack-1",
-    category: "hackathon",
+    category: "achievements",
     title: "HacKP'25  Winner",
     organization: "Kerala Police Cyberdome",
     timeline: "Oct 2025",
@@ -66,6 +92,16 @@ const experiences: ExperienceItem[] = [
       "Hac’KP 2025 is Kerala Police Cyberdome's flagship hackathon, organized in collaboration with Childlight - Global Child Safety Institute, focused on developing solutions to combat online harm and enhance child safety.",
     award: "🏆 Most Collaborative Person Award",
     image: "/award.JPG",
+  },
+  {
+    id: "hack-2",
+    category: "achievements",
+    title: "Research Paper",
+    organization: "Empower 2025, IIT Delhi",
+    timeline: "Oct 2025",
+    location: "Delhi, India",
+    description: ` "GenAI-based Personalized Adaptive Learning Platform" , Research on integrating Generative AI into adaptive learning systems. Presented at the 8th Annual Assistive Technology Conference, contributing to discussions on inclusive technology solutions for individuals with disabilities`,
+    image: "/certificate.JPG",
   },
   {
     id: "edu-1",
@@ -80,26 +116,26 @@ const experiences: ExperienceItem[] = [
 
 const categoryIcons = {
   work: Briefcase,
-  hackathon: Trophy,
+  achievements: Trophy,
   education: GraduationCap,
 };
 
 const categoryColors = {
   work: "bg-primary/10 text-primary border-primary",
-  hackathon: "bg-secondary/10 text-secondary border-secondary",
+  achievements: "bg-secondary/10 text-secondary border-secondary",
   education: "bg-accent/10 text-accent border-accent",
 };
 
 export const Experience = () => {
   // Group experiences by category
   const workExperiences = experiences.filter((e) => e.category === "work");
-  const hackathons = experiences.filter((e) => e.category === "hackathon");
+  const achievements = experiences.filter((e) => e.category === "achievements");
   const education = experiences.filter((e) => e.category === "education");
 
   return (
     <div
       id="experience"
-      className="min-w-screen h-screen flex flex-col justify-center bg-muted/30 px-8 md:px-16 mr-4"
+      className="min-h-screen md:h-screen flex flex-col md:justify-center bg-muted/30 px-4 sm:px-6 md:px-16 md:pr-8 py-12 md:py-0"
     >
       {/* Header */}
 
@@ -110,8 +146,8 @@ export const Experience = () => {
       <p className="text-lg font-retro text-muted-foreground">
         My journey through work, hackathons, and education 🚀
       </p>
-      {/* Horizontal scrolling cards container */}
-      <div className="overflow-x-auto overflow-y-hidden scrollbar-hide pb-8">
+      {/* Desktop horizontal layout */}
+      <div className="hidden md:block pb-8">
         <div className="flex gap-8 px-4 mt-8">
           {/* Work Experience Section */}
           {workExperiences.length > 0 && (
@@ -250,8 +286,8 @@ export const Experience = () => {
             </>
           )}
 
-          {/* Hackathons Section */}
-          {hackathons.length > 0 && (
+          {/* Achievements Section */}
+          {achievements.length > 0 && (
             <>
               <div className="flex-shrink-0 flex items-center justify-center w-[200px] md:w-[250px]">
                 <motion.div
@@ -263,11 +299,11 @@ export const Experience = () => {
                 >
                   <Trophy className="w-12 h-12 md:w-16 md:h-16 text-secondary mx-auto mb-3 pixel-shadow" />
                   <h3 className="font-pixel text-lg md:text-2xl text-foreground">
-                    Hackathons
+                    Achievements
                   </h3>
                 </motion.div>
               </div>
-              {hackathons.map((exp, index) => {
+              {achievements.map((exp, index) => {
                 const Icon = categoryIcons[exp.category];
 
                 return (
@@ -376,15 +412,15 @@ export const Experience = () => {
                                   </div>
                                 </motion.div>
                               )}
-                                        </motion.div>
-                                                                        <a
-                                  href='https://www.linkedin.com/feed/update/urn:li:activity:7380857991396487168/'
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="block text-xs mt-2 text-secondary/80 hover:text-secondary underline text-center"
-                                >
-                                  Read More ↗
-                                </a>
+                            </motion.div>
+                            <a
+                              href="https://www.linkedin.com/feed/update/urn:li:activity:7380857991396487168/"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="block text-xs mt-2 text-secondary/80 hover:text-secondary underline text-center"
+                            >
+                              Read More ↗
+                            </a>
                           </div>
                         )}
                       </div>
@@ -523,6 +559,234 @@ export const Experience = () => {
             </>
           )}
         </div>
+      </div>
+
+      {/* Mobile vertical layout */}
+      <div className="block md:hidden mt-10 space-y-14 overflow-visible">
+        {/* Work Section Mobile */}
+        {workExperiences.length > 0 && (
+          <div>
+            <div className="flex items-center gap-3 mb-4">
+              <Briefcase className="w-8 h-8 text-primary pixel-shadow" />
+              <h3 className="font-pixel text-2xl text-foreground">
+                Work Experience
+              </h3>
+            </div>
+            <div className="flex flex-col gap-8">
+              {workExperiences.map((exp, index) => {
+                const Icon = categoryIcons[exp.category];
+                return (
+                  <motion.div
+                    key={exp.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: index * 0.05 }}
+                    className="group"
+                  >
+                    {/* Reuse exact card styling */}
+                    <Card className="w-full h-full bg-card/50 backdrop-blur-sm border-2 hover:border-primary transition-all duration-300 overflow-hidden relative group-hover:shadow-2xl group-hover:shadow-primary/20 group-hover:glow-primary">
+                      <div className="p-6 relative z-10">
+                        <motion.div
+                          whileHover={{ scale: 1.1, rotate: 5 }}
+                          className="inline-block mb-4"
+                        >
+                          <Badge
+                            className={`${
+                              categoryColors[exp.category]
+                            } border-2 pixel-shadow font-pixel`}
+                          >
+                            <Icon className="w-4 h-4 mr-1" />
+                            {exp.category.toUpperCase()}
+                          </Badge>
+                        </motion.div>
+                        <h3 className="text-xl font-pixel mb-2 group-hover:text-primary transition-colors">
+                          {exp.title}
+                        </h3>
+                        <p className="text-base font-retro font-semibold text-muted-foreground mb-2">
+                          {exp.organization}
+                        </p>
+                        <div className="flex flex-wrap gap-3 mb-4 text-sm font-retro text-muted-foreground">
+                          <div className="flex items-center gap-1">
+                            <Calendar className="w-4 h-4" />
+                            {exp.timeline}
+                          </div>
+                          {exp.location && (
+                            <div className="flex items-center gap-1">
+                              <MapPin className="w-4 h-4" />
+                              {exp.location}
+                            </div>
+                          )}
+                        </div>
+                        <p className="text-sm font-retro mb-4 leading-relaxed text-foreground">
+                          {exp.description}
+                        </p>
+                        {exp.techStack && exp.techStack.length > 0 && (
+                          <div>
+                            <h4 className="text-sm font-pixel font-semibold mb-2 text-muted-foreground">
+                              Tech Stack:
+                            </h4>
+                            <div className="flex flex-wrap gap-2">
+                              {exp.techStack.map((tech, i) => (
+                                <span
+                                  key={i}
+                                  className="px-3 py-1 bg-primary/10 text-primary rounded-full text-xs font-retro font-medium border border-primary/20 pixel-shadow"
+                                >
+                                  {tech}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </Card>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+        {/* Achievements Section Mobile */}
+        {achievements.length > 0 && (
+          <div>
+            <div className="flex items-center gap-3 mb-4">
+              <Trophy className="w-8 h-8 text-secondary pixel-shadow" />
+              <h3 className="font-pixel text-2xl text-foreground">
+                Achievements
+              </h3>
+            </div>
+            <div className="flex flex-col gap-8">
+              {achievements.map((exp, index) => {
+                const Icon = categoryIcons[exp.category];
+                return (
+                  <motion.div
+                    key={exp.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: index * 0.05 }}
+                    className="group"
+                  >
+                    <Card className="w-full h-full bg-card/50 backdrop-blur-sm border-2 hover:border-secondary transition-all duration-300 overflow-hidden relative group-hover:shadow-2xl group-hover:shadow-secondary/20 group-hover:glow-secondary">
+                      <div className="p-6 relative z-10">
+                        <motion.div
+                          whileHover={{ scale: 1.1, rotate: 5 }}
+                          className="inline-block mb-4"
+                        >
+                          <Badge
+                            className={`${
+                              categoryColors[exp.category]
+                            } border-2 pixel-shadow font-pixel`}
+                          >
+                            <Icon className="w-4 h-4 mr-1" />
+                            {exp.category.toUpperCase()}
+                          </Badge>
+                        </motion.div>
+                        <h3 className="text-xl font-pixel mb-2 group-hover:text-secondary transition-colors">
+                          {exp.title}
+                        </h3>
+                        <p className="text-base font-retro font-semibold text-muted-foreground mb-2">
+                          {exp.organization}
+                        </p>
+                        <div className="flex flex-wrap gap-3 mb-4 text-sm font-retro text-muted-foreground">
+                          <div className="flex items-center gap-1">
+                            <Calendar className="w-4 h-4" />
+                            {exp.timeline}
+                          </div>
+                          {exp.location && (
+                            <div className="flex items-center gap-1">
+                              <MapPin className="w-4 h-4" />
+                              {exp.location}
+                            </div>
+                          )}
+                        </div>
+                        <p className="text-sm font-retro mb-4 leading-relaxed text-foreground">
+                          {exp.description}
+                        </p>
+                        {exp.award && (
+                          <div className="relative mb-2">
+                            <div className="p-3 bg-secondary/10 rounded-lg border-2 border-secondary pixel-shadow inline-block">
+                              <p className="text-secondary font-pixel">
+                                {exp.award}
+                              </p>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </Card>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+        {/* Education Section Mobile */}
+        {education.length > 0 && (
+          <div>
+            <div className="flex items-center gap-3 mb-4">
+              <GraduationCap className="w-8 h-8 text-accent pixel-shadow" />
+              <h3 className="font-pixel text-2xl text-foreground">Education</h3>
+            </div>
+            <div className="flex flex-col gap-8">
+              {education.map((exp, index) => {
+                const Icon = categoryIcons[exp.category];
+                return (
+                  <motion.div
+                    key={exp.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: index * 0.05 }}
+                    className="group"
+                  >
+                    <Card className="w-full h-full bg-card/50 backdrop-blur-sm border-2 hover:border-accent transition-all duration-300 overflow-hidden relative group-hover:shadow-2xl group-hover:shadow-accent/20 group-hover:glow-accent">
+                      <div className="p-6 relative z-10">
+                        <motion.div
+                          whileHover={{ scale: 1.1, rotate: 5 }}
+                          className="inline-block mb-4"
+                        >
+                          <Badge
+                            className={`${
+                              categoryColors[exp.category]
+                            } border-2 pixel-shadow font-pixel`}
+                          >
+                            <Icon className="w-4 h-4 mr-1" />
+                            {exp.category.toUpperCase()}
+                          </Badge>
+                        </motion.div>
+                        <h3 className="text-xl font-pixel mb-2 group-hover:text-accent transition-colors">
+                          {exp.title}
+                        </h3>
+                        <p className="text-base font-retro font-semibold text-muted-foreground mb-2">
+                          {exp.organization}
+                        </p>
+                        <div className="flex flex-wrap gap-3 mb-4 text-sm font-retro text-muted-foreground">
+                          <div className="flex items-center gap-1">
+                            <Calendar className="w-4 h-4" />
+                            {exp.timeline}
+                          </div>
+                          {exp.location && (
+                            <div className="flex items-center gap-1">
+                              <MapPin className="w-4 h-4" />
+                              {exp.location}
+                            </div>
+                          )}
+                        </div>
+                        {exp.gpa && (
+                          <div className="mb-2 p-3 bg-accent/10 rounded-lg border-2 border-accent pixel-shadow">
+                            <p className="text-accent font-pixel text-lg">
+                              📊 GPA: {exp.gpa}
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    </Card>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

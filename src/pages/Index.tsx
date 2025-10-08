@@ -17,8 +17,6 @@ const Index = () => {
         <About />
         <HorizontalScrollSection>
           <Experience />
-          <div className="min-w-screen h-screen flex flex-col justify-center px-8 md:px-16">
-          </div>
         </HorizontalScrollSection>
         <Skills />
         <Projects />
