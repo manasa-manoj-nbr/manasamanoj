@@ -101,7 +101,7 @@ const experiences: ExperienceItem[] = [
     timeline: "Oct 2025",
     location: "Delhi, India",
     description: ` "GenAI-based Personalized Adaptive Learning Platform" , Research on integrating Generative AI into adaptive learning systems. Presented at the 8th Annual Assistive Technology Conference, contributing to discussions on inclusive technology solutions for individuals with disabilities`,
-    image: "/certificate.JPG",
+    image: "/certificate.jpg",
   },
   {
     id: "edu-1",
